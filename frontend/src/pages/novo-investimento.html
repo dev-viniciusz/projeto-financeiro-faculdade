@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="verde-claro">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Novo investimento | Meu Financeiro</title>
+        <link rel="stylesheet" href="../css/styles.css" />
+        <script src="../js/theme.js"></script>
+        <script src="../js/api.js" defer></script>
+        <script src="../js/app.js" defer></script>
+    </head>
+    <body data-pagina="investimentos" data-formulario="true">
+        <a class="skip" href="#content">Pular para o conteúdo</a>
+        <div id="menu-backdrop" class="menu-backdrop" aria-hidden="true" hidden></div>
+        <aside id="menu-lateral" class="sidebar" aria-label="Navegação principal">
+            <button id="menu-close" class="menu-close" type="button" aria-label="Fechar menu">×</button>
+            <a href="../index.html" class="logo"
+                ><span class="symbol"
+                    ><img src="../assets/icons/wallet.svg" alt="" /></span
+                >Meu Financeiro</a
+            >
+            <p class="nav-caption">FINANÇAS PESSOAIS</p>
+            <nav>
+                <a href="../index.html" data-nav="visao-geral"
+                    ><img src="../assets/icons/grid.svg" alt="" />Visão geral</a
+                >
+                <a href="rendas.html" data-nav="rendas"
+                    ><img src="../assets/icons/up.svg" alt="" />Rendas</a
+                >
+                <a href="despesas.html" data-nav="despesas"
+                    ><img src="../assets/icons/down.svg" alt="" />Despesas</a
+                >
+                <a
+                    href="investimentos.html"
+                    data-nav="investimentos"
+                    aria-current="page"
+                    ><img
+                        src="../assets/icons/invest-active.svg"
+                        alt=""
+                    />Investimentos</a
+                >
+            </nav>
+            <div class="nav-bottom">
+                <a href="configuracoes.html" data-nav="configuracoes"
+                    ><img
+                        src="../assets/icons/settings.svg"
+                        alt=""
+                    />Configurações</a
+                >
+                <div class="privacy">
+                    <img src="../assets/icons/shield.svg" alt="" /><span
+                        >Seu controle,<br />suas informações.</span
+                    >
+                </div>
+            </div>
+        </aside>
+        <div class="workspace">
+            <header class="topbar">
+                <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><span></span><span></span><span></span></button>
+                <span class="mobile-brand">Meu Financeiro</span>
+                <span class="space-label">Meu espaço</span><span class="topbar-description">Finanças pessoais</span>
+            </header>
+            <main id="content">
+                <div class="page-heading">
+                    <div>
+                        <h1 id="titulo">Novo investimento</h1>
+                        <p id="subtitulo" class="subtitle">
+                            Preencha os dados abaixo para manter seu controle
+                            atualizado.
+                        </p>
+                    </div>
+                    <button
+                        class="period"
+                        id="period-open"
+                        aria-haspopup="dialog"
+                        hidden
+                    >
+                        <img src="../assets/icons/calendar.svg" alt="" /><span
+                            id="periodo-atual"
+                            >Selecionar período</span
+                        ><img src="../assets/icons/chevron.svg" alt="" />
+                    </button>
+                </div>
+                <p id="erro-conexao" class="error" role="alert" hidden></p>
+                <div id="tela">
+                    <button id="voltar" class="text-button back">
+                        ← Voltar para investimentos
+                    </button>
+                    <div class="form-layout">
+                        <form id="record-form" class="card record-form">
+                            <h2 id="titulo-formulario">
+                                Dados do investimento
+                            </h2>
+                            <p class="card-subtitle">
+                                Todos os campos com * são obrigatórios.
+                            </p>
+                            <div class="fields">
+                                <div class="field">
+                                    <label id="rotulo-descricao" for="descricao"
+                                        >Tipo de investimento *</label
+                                    ><input
+                                        id="descricao"
+                                        maxlength="120"
+                                        required
+                                    />
+                                </div>
+                                <div class="field-row">
+                                    <div class="field">
+                                        <label for="valor">Valor (R$) *</label
+                                        ><input
+                                            id="valor"
+                                            placeholder="0,00"
+                                            inputmode="decimal"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="field">
+                                        <label for="data">Data *</label
+                                        ><input
+                                            id="data"
+                                            type="date"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div id="campo-categoria" class="field" hidden>
+                                    <label for="categoria">Categoria *</label
+                                    ><select id="categoria">
+                                        <option value="">
+                                            Selecione uma categoria
+                                        </option>
+                                        <option value="ALIMENTACAO">
+                                            Alimentação
+                                        </option>
+                                        <option value="MORADIA">Moradia</option>
+                                        <option value="TRANSPORTE">
+                                            Transporte
+                                        </option>
+                                        <option value="LAZER">Lazer</option>
+                                        <option value="SAUDE">Saúde</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p id="form-error" class="error" role="alert"></p>
+                            <div class="actions">
+                                <button id="cancelar" type="button">
+                                    Cancelar</button
+                                ><button
+                                    id="salvar"
+                                    type="submit"
+                                    class="primary"
+                                >
+                                    Salvar investimento
+                                </button>
+                            </div>
+                        </form>
+                        <aside class="guidance">
+                            <h3>Um registro bem organizado</h3>
+                            <p>
+                                Use uma descrição fácil de reconhecer e a data
+                                da movimentação.
+                            </p>
+                            <p>Valores sempre maiores que zero.</p>
+                            <p id="orientacao">
+                                Valores salvos no seu controle financeiro.
+                            </p>
+                        </aside>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div id="toast" role="status" aria-live="polite" hidden></div>
+        <dialog id="period-dialog" aria-labelledby="period-title">
+            <form id="period-form">
+                <h2 id="period-title">Selecionar período</h2>
+                <p>Escolha um mês ou informe um intervalo.</p>
+                <label for="month">Mês</label><input id="month" type="month" />
+                <div class="field-row">
+                    <div>
+                        <label for="start">Data inicial *</label
+                        ><input id="start" type="date" required />
+                    </div>
+                    <div>
+                        <label for="end">Data final *</label
+                        ><input id="end" type="date" required />
+                    </div>
+                </div>
+                <p class="error" id="period-error" role="alert"></p>
+                <div class="actions">
+                    <button type="button" id="period-cancel">Cancelar</button
+                    ><button class="primary">Aplicar período</button>
+                </div>
+            </form>
+        </dialog>
+    </body>
+</html>

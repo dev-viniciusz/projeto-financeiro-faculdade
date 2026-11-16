@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="verde-claro">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Visão geral | Meu Financeiro</title>
+        <link rel="stylesheet" href="css/styles.css" />
+        <script src="js/theme.js"></script>
+        <script src="js/api.js" defer></script>
+        <script src="js/app.js" defer></script>
+    </head>
+    <body data-pagina="visao-geral">
+        <a class="skip" href="#content">Pular para o conteúdo</a>
+        <div id="menu-backdrop" class="menu-backdrop" aria-hidden="true" hidden></div>
+        <aside id="menu-lateral" class="sidebar" aria-label="Navegação principal">
+            <button id="menu-close" class="menu-close" type="button" aria-label="Fechar menu">×</button>
+            <a href="index.html" class="logo"
+                ><span class="symbol"
+                    ><img src="assets/icons/wallet.svg" alt="" /></span
+                >Meu Financeiro</a
+            >
+            <p class="nav-caption">FINANÇAS PESSOAIS</p>
+            <nav>
+                <a href="index.html" data-nav="visao-geral" aria-current="page"
+                    ><img src="assets/icons/grid.svg" alt="" />Visão geral</a
+                >
+                <a href="pages/rendas.html" data-nav="rendas"
+                    ><img src="assets/icons/up.svg" alt="" />Rendas</a
+                >
+                <a href="pages/despesas.html" data-nav="despesas"
+                    ><img src="assets/icons/down.svg" alt="" />Despesas</a
+                >
+                <a href="pages/investimentos.html" data-nav="investimentos"
+                    ><img
+                        src="assets/icons/invest.svg"
+                        alt=""
+                    />Investimentos</a
+                >
+            </nav>
+            <div class="nav-bottom">
+                <a href="pages/configuracoes.html" data-nav="configuracoes"
+                    ><img
+                        src="assets/icons/settings.svg"
+                        alt=""
+                    />Configurações</a
+                >
+                <div class="privacy">
+                    <img src="assets/icons/shield.svg" alt="" /><span
+                        >Seu controle,<br />suas informações.</span
+                    >
+                </div>
+            </div>
+        </aside>
+        <div class="workspace">
+            <header class="topbar">
+                <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><span></span><span></span><span></span></button>
+                <span class="mobile-brand">Meu Financeiro</span>
+                <span class="space-label">Meu espaço</span><span class="topbar-description">Finanças pessoais</span>
+            </header>
+            <main id="content">
+                <div class="page-heading">
+                    <div>
+                        <h1 id="titulo">Visão geral</h1>
+                        <p id="subtitulo" class="subtitle">
+                            Um olhar claro sobre o seu dinheiro.
+                        </p>
+                    </div>
+                    <button
+                        class="period"
+                        id="period-open"
+                        aria-haspopup="dialog"
+                    >
+                        <img src="assets/icons/calendar.svg" alt="" /><span
+                            id="periodo-atual"
+                            >Selecionar período</span
+                        ><img src="assets/icons/chevron.svg" alt="" />
+                    </button>
+                </div>
+                <p id="erro-conexao" class="error" role="alert" hidden></p>
+                <div id="tela">
+                    <div class="stat-grid">
+                        <section class="card stat">
+                            <p>Total de rendas</p>
+                            <strong id="total-rendas" class="income"
+                                >R$ 0,00</strong
+                            ><small id="quantidade-rendas"></small>
+                        </section>
+                        <section class="card stat">
+                            <p>Total de despesas</p>
+                            <strong id="total-despesas" class="expense"
+                                >R$ 0,00</strong
+                            ><small id="quantidade-despesas"></small>
+                        </section>
+                        <section class="card stat">
+                            <p>Saldo do período</p>
+                            <strong id="saldo" class="income">R$ 0,00</strong
+                            ><small>Rendas − despesas</small>
+                        </section>
+                        <section class="card stat">
+                            <p>Total investido</p>
+                            <strong id="total-investimentos" class="investment"
+                                >R$ 0,00</strong
+                            ><small>Aportes no período</small>
+                        </section>
+                    </div>
+                    <div class="dashboard-middle">
+                        <section class="card">
+                            <h2>Para onde foi seu dinheiro</h2>
+                            <p class="card-subtitle">
+                                Despesas por categoria no período
+                            </p>
+                            <div id="categorias-resumo" class="bars">
+                                <p>Nenhuma despesa neste período.</p>
+                            </div>
+                        </section>
+                        <section class="card">
+                            <h2>Tudo em dia, em poucos cliques</h2>
+                            <p class="card-subtitle">
+                                Adicione uma movimentação ao seu controle.
+                            </p>
+                            <div class="shortcuts">
+                                <button class="primary" data-create="rendas">
+                                    ＋ Nova renda
+                                </button>
+                                <button data-create="despesas">
+                                    ＋ Nova despesa
+                                </button>
+                                <button data-create="investimentos">
+                                    ＋ Novo investimento
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                    <section class="card">
+                        <div class="recent-heading">
+                            <h2>Movimentações recentes</h2>
+                            <a href="pages/despesas.html">Ver despesas →</a>
+                        </div>
+                        <div id="recentes">
+                            <p class="empty">
+                                Nenhuma movimentação neste período.
+                            </p>
+                        </div>
+                    </section>
+                    <p class="footnote">
+                        Os investimentos são registros de aportes e não alteram
+                        o cálculo do saldo.
+                    </p>
+                </div>
+            </main>
+        </div>
+        <div id="toast" role="status" aria-live="polite" hidden></div>
+        <dialog id="period-dialog" aria-labelledby="period-title">
+            <form id="period-form">
+                <h2 id="period-title">Selecionar período</h2>
+                <p>Escolha um mês ou informe um intervalo.</p>
+                <label for="month">Mês</label><input id="month" type="month" />
+                <div class="field-row">
+                    <div>
+                        <label for="start">Data inicial *</label
+                        ><input id="start" type="date" required />
+                    </div>
+                    <div>
+                        <label for="end">Data final *</label
+                        ><input id="end" type="date" required />
+                    </div>
+                </div>
+                <p class="error" id="period-error" role="alert"></p>
+                <div class="actions">
+                    <button type="button" id="period-cancel">Cancelar</button
+                    ><button class="primary">Aplicar período</button>
+                </div>
+            </form>
+        </dialog>
+    </body>
+</html>

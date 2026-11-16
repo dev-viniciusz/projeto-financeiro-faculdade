@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="verde-claro">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Investimentos | Meu Financeiro</title>
+        <link rel="stylesheet" href="../css/styles.css" />
+        <script src="../js/theme.js"></script>
+        <script src="../js/api.js" defer></script>
+        <script src="../js/app.js" defer></script>
+    </head>
+    <body data-pagina="investimentos">
+        <a class="skip" href="#content">Pular para o conteúdo</a>
+        <div id="menu-backdrop" class="menu-backdrop" aria-hidden="true" hidden></div>
+        <aside id="menu-lateral" class="sidebar" aria-label="Navegação principal">
+            <button id="menu-close" class="menu-close" type="button" aria-label="Fechar menu">×</button>
+            <a href="../index.html" class="logo"
+                ><span class="symbol"
+                    ><img src="../assets/icons/wallet.svg" alt="" /></span
+                >Meu Financeiro</a
+            >
+            <p class="nav-caption">FINANÇAS PESSOAIS</p>
+            <nav>
+                <a href="../index.html" data-nav="visao-geral"
+                    ><img src="../assets/icons/grid.svg" alt="" />Visão geral</a
+                >
+                <a href="rendas.html" data-nav="rendas"
+                    ><img src="../assets/icons/up.svg" alt="" />Rendas</a
+                >
+                <a href="despesas.html" data-nav="despesas"
+                    ><img src="../assets/icons/down.svg" alt="" />Despesas</a
+                >
+                <a
+                    href="investimentos.html"
+                    data-nav="investimentos"
+                    aria-current="page"
+                    ><img
+                        src="../assets/icons/invest-active.svg"
+                        alt=""
+                    />Investimentos</a
+                >
+            </nav>
+            <div class="nav-bottom">
+                <a href="configuracoes.html" data-nav="configuracoes"
+                    ><img
+                        src="../assets/icons/settings.svg"
+                        alt=""
+                    />Configurações</a
+                >
+                <div class="privacy">
+                    <img src="../assets/icons/shield.svg" alt="" /><span
+                        >Seu controle,<br />suas informações.</span
+                    >
+                </div>
+            </div>
+        </aside>
+        <div class="workspace">
+            <header class="topbar">
+                <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="menu-lateral" aria-expanded="false"><span></span><span></span><span></span></button>
+                <span class="mobile-brand">Meu Financeiro</span>
+                <span class="space-label">Meu espaço</span><span class="topbar-description">Finanças pessoais</span>
+            </header>
+            <main id="content">
+                <div class="page-heading">
+                    <div>
+                        <h1 id="titulo">Investimentos</h1>
+                        <p id="subtitulo" class="subtitle">
+                            Acompanhe seus registros no período selecionado.
+                        </p>
+                    </div>
+                    <button
+                        class="period"
+                        id="period-open"
+                        aria-haspopup="dialog"
+                    >
+                        <img src="../assets/icons/calendar.svg" alt="" /><span
+                            id="periodo-atual"
+                            >Selecionar período</span
+                        ><img src="../assets/icons/chevron.svg" alt="" />
+                    </button>
+                </div>
+                <p id="erro-conexao" class="error" role="alert" hidden></p>
+                <div id="tela">
+                    <div class="list-top">
+                        <section class="card total-card">
+                            <p id="rotulo-total">Investimentos no período</p>
+                            <div class="total-line">
+                                <strong id="total-lista" class="investment"
+                                    >R$ 0,00</strong
+                                ><small id="quantidade-lista"
+                                    >0 registros</small
+                                >
+                            </div>
+                        </section>
+                        <button
+                            id="novo-registro"
+                            class="primary"
+                            data-create="investimentos"
+                        >
+                            ＋ Novo investimento
+                        </button>
+                    </div>
+                    <div id="filtros" class="filters" hidden>
+                        <p>Filtrar por categoria</p>
+                        <div
+                            id="botoes-categoria"
+                            class="filter-buttons"
+                            role="group"
+                            aria-label="Filtrar por categoria"
+                        ></div>
+                    </div>
+                    <section class="card table-wrap">
+                        <table id="tabela" class="records">
+                            <thead id="cabecalho-tabela">
+                                <tr>
+                                    <th>Tipo de investimento</th>
+                                    <th class="date">Data</th>
+                                    <th class="amount">Valor</th>
+                                    <th class="action">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registros"></tbody>
+                        </table>
+                        <p id="lista-vazia" class="empty">
+                            Nenhum registro encontrado. Cadastre um registro ou
+                            escolha outro período.
+                        </p>
+                        <div id="rodape-lista" class="table-footer">
+                            0 registros no período selecionado
+                        </div>
+                    </section>
+                    <p class="footnote">
+                        Você pode editar os registros a qualquer momento. O
+                        total considera o período selecionado.
+                    </p>
+                </div>
+            </main>
+        </div>
+        <div id="toast" role="status" aria-live="polite" hidden></div>
+        <dialog id="period-dialog" aria-labelledby="period-title">
+            <form id="period-form">
+                <h2 id="period-title">Selecionar período</h2>
+                <p>Escolha um mês ou informe um intervalo.</p>
+                <label for="month">Mês</label><input id="month" type="month" />
+                <div class="field-row">
+                    <div>
+                        <label for="start">Data inicial *</label
+                        ><input id="start" type="date" required />
+                    </div>
+                    <div>
+                        <label for="end">Data final *</label
+                        ><input id="end" type="date" required />
+                    </div>
+                </div>
+                <p class="error" id="period-error" role="alert"></p>
+                <div class="actions">
+                    <button type="button" id="period-cancel">Cancelar</button
+                    ><button class="primary">Aplicar período</button>
+                </div>
+            </form>
+        </dialog>
+    </body>
+</html>
