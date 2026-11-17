@@ -2,17 +2,13 @@
 
 Sistema de finanças pessoais para apresentação da faculdade. Usa **Java com Spring Boot**, banco H2, **HTML, CSS e JavaScript puro**.
 
-## Abrir pelo Live Server
+## Iniciar o sistema
 
-1. No VS Code, abra `frontend/src/index.html`.
-2. Clique com o botão direito e escolha **Open with Live Server**.
-3. Navegue normalmente pelo menu. As páginas de `frontend/src/pages` também podem ser abertas diretamente.
+1. No VS Code, abra a pasta completa do projeto e aguarde a importação de `backend/pom.xml` com a extensão **Extension Pack for Java** instalada.
+2. Abra `backend/src/main/java/com/financeiro/Main.java` e clique em **Run Java**.
+3. Aguarde o servidor iniciar e abra **http://localhost:8080/** no navegador.
 
-Todos os HTMLs têm `DOCTYPE`, `html`, `head`, `body`, título, CSS e JavaScript ligados por caminhos relativos. O visual e a troca de temas funcionam sem o backend. Para cadastrar, editar e consultar os dados, inicie também o Spring.
-
-## Iniciar o backend
-
-No VS Code, instale **Extension Pack for Java**, abra a pasta completa do projeto e aguarde a importação de `backend/pom.xml`. Pressione **F5** e escolha **Iniciar Spring Boot**. A configuração em `.vscode/launch.json` inicia o projeto com as dependências do Maven, usando a pasta `backend` e mostrando os logs no terminal integrado. Para parar essa execução, pressione **Shift+F5**.
+O Spring Boot inicia o Tomcat embutido. O mesmo servidor entrega os arquivos HTML, CSS e JavaScript e atende às requisições da API. Mantenha o Java em execução enquanto usa o site.
 
 O comando **Run Code**, da extensão Code Runner, executa `javac` em um arquivo isolado e não carrega as bibliotecas do Spring.
 
@@ -23,9 +19,9 @@ cd backend
 mvn spring-boot:run
 ```
 
-O backend fica em **http://localhost:8080**. Também é possível abrir o site nesse endereço, sem Live Server. Para parar o Spring iniciado no terminal, pressione `Ctrl+C`.
+O site e a API ficam em **http://localhost:8080**. Para parar o Spring iniciado no terminal, pressione `Ctrl+C`.
 
-O JavaScript usa `http://localhost:8080/api` quando aberto pelo Live Server. O Spring permite conexões locais de `localhost` e `127.0.0.1`, mesmo em outra porta. Não é necessário instalar Node ou Python para executar o projeto. Não há Maven Wrapper: somente o `pom.xml` para a configuração Maven.
+O JavaScript usa `/api`, no mesmo endereço e porta do site. Não é necessário usar Live Server, Node ou Python. Não há Maven Wrapper: somente o `pom.xml` para a configuração Maven.
 
 ## Estrutura
 
@@ -77,7 +73,7 @@ As classes `Usuario`, `Renda`, `Despesa` e `Investimento` seguem os nomes e os m
 
 **Saldo = rendas − despesas.** Investimentos são somados separadamente. O cartão de despesas mantém o total do período quando a lista é filtrada por categoria.
 
-O banco começa vazio e fica em `backend/data/financeiro.mv.db`. Os registros continuam salvos após reiniciar o sistema. O `schema.sql` cria a tabela se ela ainda não existir. Para fazer backup, pare o Spring e copie o arquivo do banco.
+O banco começa vazio e usa o caminho `./data/financeiro`, relativo à pasta de execução do Java: `data/financeiro.mv.db` ao iniciar pela raiz ou `backend/data/financeiro.mv.db` ao iniciar dentro de `backend`. Use sempre a mesma pasta de execução para acessar o mesmo banco. Os registros continuam salvos após reiniciar o sistema. O `schema.sql` cria a tabela se ela ainda não existir. Para fazer backup, pare o Spring e copie o arquivo do banco.
 
 O botão **Apagar** pede confirmação e remove o registro do banco (`DELETE /api/registros/{id}`). O registro deixa de aparecer na lista, no resumo e nas movimentações recentes. Não é mantido um histórico de registros apagados.
 
@@ -100,7 +96,7 @@ O computador, o Spring e o ngrok precisam permanecer ligados para o link funcion
 
 ## Consultar o banco H2
 
-Com o Spring iniciado a partir da pasta `backend`, abra **http://localhost:8080/h2-console** e preencha:
+Com o Spring iniciado, abra **http://localhost:8080/h2-console** e preencha:
 
 - Driver Class: `org.h2.Driver`
 - JDBC URL: `jdbc:h2:file:./data/financeiro`
@@ -111,8 +107,9 @@ Clique em **Connect**. Para visualizar os registros, execute `SELECT * FROM REGI
 
 ## Fluxo para explicar na apresentação
 
-1. O usuário abre um HTML e preenche o formulário.
-2. `api.js` envia os dados com `fetch` para o Spring.
-3. `FinanceiroController` valida e chama `Db` para gravar ou consultar o banco.
-4. No resumo, os registros são organizados nas classes `Renda`, `Despesa` e `Investimento` do `Usuario`.
-5. `Usuario` calcula os totais com laços `for`; o Spring devolve JSON e o JavaScript preenche a tela.
+1. Executamos `Main.java`: o Spring Boot inicia o Tomcat na porta 8080.
+2. O navegador pede o site; o servidor entrega HTML, CSS e JavaScript.
+3. Ao consultar ou salvar, `app.js` chama `api.js`, que envia uma requisição HTTP com `fetch` para `/api`.
+4. O Tomcat recebe a requisição e o Spring a encaminha ao método correspondente de `FinanceiroController`.
+5. O controller valida quando necessário e chama `Db`, que executa SQL no banco H2. No resumo, `Usuario` calcula os totais.
+6. O Spring devolve os dados em JSON e o JavaScript atualiza a tela no navegador.
