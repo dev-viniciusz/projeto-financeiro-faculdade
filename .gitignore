@@ -5,3 +5,6 @@ backend/data/
 .vscode/
 *.iml
 .data/
+.target/
+/frontend/src/assets/INTER-LICENSE.txt
+README.md
